@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# lifted from https://github.com/MunifTanjim/scripts.bash
+
+echo "Updating APT Cache..."
+sudo apt-get update
+
+echo "Installing dependencies..."
+sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+echo "Adding Podman's official GPG key..."
+curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/testing/xUbuntu_20.04/Release.key | sudo apt-key add -
+
+echo "Adding APT Repository..."
+echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/testing/xUbuntu_20.04/ /' | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:testing.list
+
+echo "Installing Podman..."
+sudo apt update -qq
+sudo apt install podman -y -qq
+
+echo "Done!"

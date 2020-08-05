@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+declare RPM_PACKAGES=(
+    zsh '@c-development' '@development-tools' httpie tmux xsel 
+    exa bat cargo npm python3-devel python3-pip p7zip p7zip-plugins 
+    lsof neovim neofetch glibc-locale-source glibc-langpack-en
+    ShellCheck jq most
+)
+
+echo "${RPM_PACKAGES[@]}"
+echo ""
+
+printf "fastestmirror=True\ndeltarpm=True\n" | sudo tee -a /etc/dnf/dnf.conf
+
+sudo dnf update -y
+
+sudo dnf install -y "${RPM_PACKAGES[@]}"
+
+printf "LANG=en_US.UTF-8\n" | sudo tee -a /etc/locale.conf
+sudo localedef -f UTF-8 -i en_US en_US.UTF-8

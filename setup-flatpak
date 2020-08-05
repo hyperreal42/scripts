@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+if ! type flatpak >/dev/null 2>&1; then
+    exit 0
+fi
+
+echo ""
+echo "======================================"
+echo "= Installing Flatpak Packages         ="
+echo "======================================"
+echo ""
+
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+declare FLATPAK_PACKAGES=(
+    com.github.miguelmota.Cointop
+    com.discordapp.Discord
+    org.telegram.desktop
+    org.zealdocs.Zeal
+    im.slack.Slack
+    im.riot.Riot
+    com.getpostman.Postman
+    net.ankiweb.Anki
+    org.nextcloud.Nextcloud
+    org.wireshark.Wireshark
+    ch.protonmail.protonmail-bridge
+    ca.desrt.dconf-editor
+    com.bitwarden.desktop
+    com.github.micahflee.torbrowser-launcher
+)
+
+echo "${FLATPAK_PACKAGES[@]}"
+echo ""
+
+flatpak install -y "${FLATPAK_PACKAGES[@]}"

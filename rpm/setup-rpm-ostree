@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+function setup_rpmfusion() {
+    sudo rpm-ostree install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-32.noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-32.noarch.rpm
+}
+
+function setup_repos() {
+    curl -o /etc/yum.repos.d/dawid-better_fonts-fedora-32.repo https://copr.fedorainfracloud.org/coprs/dawid/better_fonts/repo/fedora-32/dawid-better_fonts-fedora-32.repo
+  }
+
+declare LAYERED_PACKAGES=(
+    akmod-nvidia ffmpeg-libs fontconfig-enhanced-defaults fontconfig-font-replacements 
+    gnome-tweak-tool neovim podman-docker podman-compose tmux xsel zsh
+)
+
+function install_packages() {
+    sudo rpm-ostree install "${LAYERED_PACKAGES[@]}"
+)

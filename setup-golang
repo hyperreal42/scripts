@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# :author:     Jeffrey Serio <hyperreal64@pm.me>
+# :date:        4 Aug 2020
+# :version:     0.0.2
+#
+# This program downloads and extracts the latest version of Go from golang.org.
+# If you didn't spend 3 hours automating a task that takes 30 seconds, are you even working?
+# TODO:
+# - Implement positional parameters for upgrading, installing, and removing using a case statement
+
+set -euo pipefail
+
+# Extract release info from https://golang.org/dl/ -- hopefully they don't change the HTML structure
+GOURL=$(curl https://golang.org/dl/ 2>&1 | grep -o -E 'href="([^"#]+)"' | cut -d'"' -f2 | awk '/tar.gz/' | awk NR==1)
+GOVER=$(echo "$GOURL" | grep -E -o "([0-9]{1,}\.)+[0-9]{1,}")
+GOHREF="href=\"$GOURL\""
+SHA256SUM=$(curl -s https://golang.org/dl/ | grep -A 5 '<td class="filename"><a class="download" '"$GOHREF"'' | grep "<td><tt>" | cut -b 11-74)
+
+while [ "$1" != "" ]; do
+  case $1 in
+    "install" )
+      check_exists()
+      download_go()
+      extract_go()
+      ;;
+    
+    "upgrade" )
+      check_gover()
+      remove_go()
+      download_go()
+      extract_go()
+      ;;
+
+    "remove" )
+      check_exists()
+      remove_go()
+      ;;
+
+# check if Go already exists
+if [[ -f "$(command -v go)" ]]; then
+  echo "Go already exists on this system at $(command -v go)"
+  exit 0
+fi
+
+# Download and extract tarball if sha256sum checks out
+echo "Downloading Golang..."
+wget https://golang.org"$GOURL" -O /tmp/golang.tar.gz >/dev/null 2>&1
+if ! echo "$SHA256SUM /tmp/golang.tar.gz" | sha256sum --check; then
+  exit 1
+fi
+
+echo ""
+
+echo "Extracting archive into /usr/local..."
+sudo tar -C /usr/local -xzf /tmp/golang.tar.gz
+
+echo ""
+
+echo "Process complete! Go $GOVER is installed at /usr/local/go :)"

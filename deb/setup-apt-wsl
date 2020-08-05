@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+echo 'Acquire::Languages "none";' | sudo tee /etc/apt/apt.conf.d/99disable-translations
+
+function update_cache() {
+    echo ""
+    echo "Updating Package Cache..."
+    echo ""
+    sudo apt update
+}
+
+declare APT_PACKAGES=(
+    build-essential zsh python3-dev python3-pip curl httpie
+    cargo npm ansible tmux git git-core neovim xsel jq 
+    pastebinit apt-file gnome-tweak-tool chrome-gnome-shell 
+    apt-transport-https autoconf automake most
+)
+
+echo "${APT_PACKAGES[@]}"
+echo ""
+
+update_cache
+
+sudo apt install -y "${APT_PACKAGES[@]}"
+
+declare THIRD_PARTY_APT_PACKAGES=(
+    apt-fast
+)
+
+echo "${THIRD_PARTY_APT_PACKAGES[@]}"
+echo ""
+
+declare APT_REPOSITORIES=(
+    ppa:apt-fast/stable
+)
+
+for apt_repo in "${APT_REPOSITORIES[@]}"; do
+    echo ""
+    echo "Adding APT Repository: ${apt_repo}"
+    echo ""
+    sudo add-apt-repository -y --no-update "${apt_repo}"
+done
+
+update_cache
+
+sudo apt install -y "${THIRD_PARTY_APT_PACKAGES[@]}"

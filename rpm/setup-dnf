@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+function setup_rpmfusion() {
+    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-32.noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-32.noarch.rpm
+}
+
+function setup_copr() {
+    sudo dnf copr enable dawid/better_fonts
+}
+
+declare RPM_PACKAGES=(
+    zsh '@c-development' '@development-tools' '@container-management'
+    nano tmux xsel exa bat cargo npm neovim jq ShellCheck toolbox
+    python3-devel python3-pip gnome-tweak-tool chrome-gnome-shell 
+    p7zip p7zip-plugins ffmpeg-libs lsof akmod-nvidia most
+    fontconfig-enhanced-defaults fontconfig-font-replacements
+)
+
+echo "${RPM_PACKAGES[@]}"
+echo ""
+
+setup_rpmfusion
+setup_copr
+sudo dnf install -y "${RPM_PACKAGES[@]}"
