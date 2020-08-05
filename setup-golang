@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+
+# :author:     Jeffrey Serio <hyperreal64@pm.me>
+# :date:        5 Aug 2020
+# :version:     0.0.3
+#
+# This program can be used to install, upgrade, or remove Golang
+# If you didn't spend 3 hours automating a task that takes 30 seconds, are you even working?
+# TODO:
+#
+# Changelog:
+# 5 Aug 2020 - Implement positional parameters for upgrade, install, and remove.
+#            - Allow user to set GOPREFIX environment variable for alternate locations
+#
+# 4 Aug 2020 - Change maintainer email address
+#            - Change check for installed Go expression
+#            - Display Go version message
+
+set -euo pipefail
+
+# Extract release info from https://golang.org/dl/ -- hopefully they don't change the HTML structure
+GOURL=$(curl https://golang.org/dl/ 2>&1 | grep -o -E 'href="([^"#]+)"' | cut -d'"' -f2 | awk '/tar.gz/' | awk NR==1)
+GOVER=$(echo "$GOURL" | grep -E -o "([0-9]{1,}\.)+[0-9]{1,}")
+GOHREF="href=\"$GOURL\""
+SHA256SUM=$(curl -s https://golang.org/dl/ | grep -A 5 '<td class="filename"><a class="download" '"$GOHREF"'' | grep "<td><tt>" | cut -b 11-74)
+GOPREFIX=${GOPREFIX:-/usr/local}
+
+# Helper functions
+function download_go() {
+  echo "Downloading Golang..."
+  wget "https://golang.org${GOURL}" -O /tmp/golang.tar.gz >/dev/null 2>&1
+  echo "$SHA256SUM /tmp/golang.tar.gz" | sha256sum --check
+}
+
+function extract_go() {
+  echo "Extracting archive into ${GOPREFIX}..."
+  sudo tar -C "${GOPREFIX}" -xzf /tmp/golang.tar.gz
+  sudo rm -rf /tmp/golang.tar.gz
+  echo "Process complete! Go ${GOVER} is installed at ${GOPREFIX}/go :)"
+}
+
+function remove_go() {
+  echo "Removing Go installation from ${GOPREFIX}/go"
+  sudo rm -rf "${GOPREFIX}/go"
+  echo "Done"
+}
+
+function check_gover() {
+  _cur_go_version=$(go version | grep -E -o "([0-9]{1,}\.)+[0-9]{1,}")
+  if [[ "${_cur_go_version}" == "${GOVER}" ]]; then
+    printf "The latest release of Go is already installed: %s\n" "${_cur_go_version}"
+    exit 0
+  fi
+}
+
+function print_usage() {
+    printf "Usage:\nsetup-golang [install|upgrade|remove]\n\n"
+    printf "Default GOPREFIX is /usr/local. To use a different location, set the GOPREFIX env variable before running this script\n"
+}
+
+
+# handle command line arguments
+ARG=${1:-""}
+case $ARG in
+  "install")
+    if ! [[ -d "${GOPREFIX}/go" ]]; then
+      download_go && extract_go
+    else
+      echo "Go is already installed at ${GOPREFIX}/go"
+      exit 1
+    fi
+    ;;
+  
+  "upgrade")
+    if [[ -f "$(command -v go)" ]]; then
+      check_gover
+      remove_go
+      download_go
+      extract_go
+    else
+      echo "Go is not installed yet. Please run 'setup-golang install'"
+      exit 1
+    fi
+    ;;
+
+  "remove")
+    if [[ -d "${GOPREFIX}/go" ]]; then
+      remove_go
+    else
+      echo "No Go installtion found at ${GOPREFIX}/go"
+    fi
+    ;;
+
+  *)
+    print_usage
+    exit 1
+    ;;
+esac
