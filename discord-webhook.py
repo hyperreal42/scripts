@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+#
+# :author:      Jeffrey Serio <hyperreal64@pm.me>
+# :date:        17 Aug 2020
+# :version:     0.0.1
+#
+# This script is used to send POST requests to a Discord webhook
+# TODO:
+#
+# Changelog:
 
 from discord_webhook import DiscordEmbed, DiscordWebhook
 import requests
