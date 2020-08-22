@@ -18,7 +18,8 @@ declare RPM_PACKAGES=(
     p7zip p7zip-plugins ffmpeg-libs lsof akmod-nvidia most
     fontconfig-enhanced-defaults fontconfig-font-replacements
     system76-dkms system76-power system76-driver system76-firmware
-    firmware-manager system76-io-dkms
+    firmware-manager system76-io-dkms snapd ansible tor torsocks
+    proxychains gobby05 python3-neovim neofetch htop lynis
 )
 
 echo "${RPM_PACKAGES[@]}"
