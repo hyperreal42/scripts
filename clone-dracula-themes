@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# :author:     Jeffrey Serio <hyperreal64@pm.me>
+# :date:       3 Sep 2020
+# :version:    0.0.1
+#
+# Clone selected Github repos for the Dracula theme
+# and store them in ~/src
+#
+# Changelog:
+# 3 Sep 2020 - First version
+
+set -euo pipefail
+
+_src_dir="${HOME}/src"
+_drac_dir="${_src_dir}/dracula"
+_drac_url="https://github.com/dracula/"
+
+# If ~/src not exist, create it; then create drac dir
+[[ -d "${_src_dir}" ]] || mkdir "${_src_dir}"
+mkdir "${_drac_dir}"
+
+# declare repo names
+declare DRAC_REPOS=(
+  base16-dracula-scheme
+  gnome-terminal
+  gtk
+  highlightjs
+  insomnia
+  mutt
+  powershell
+  telegram
+  tmux
+  ulauncher
+  vim
+  windows-terminal
+  wox
+  xresources
+)
+
+# clone the repos!
+echo "Cloning the following repos..."
+echo "${DRAC_REPOS[@]}"
+
+for repo in "${DRAC_REPOS[@]}"; do
+  git clone "${_drac_url}/$repo" "${_drac_dir}/$repo"
+done
+
+echo ""
+echo "Process complete!"
