@@ -16,15 +16,13 @@ declare FLATPAK_PACKAGES=(
     com.github.miguelmota.Cointop
     com.discordapp.Discord
     org.telegram.desktop
-    org.zealdocs.Zeal
     im.slack.Slack
-    im.riot.Riot
-    com.getpostman.Postman
     net.ankiweb.Anki
-    org.nextcloud.Nextcloud
+    org.zealdocs.Zeal
     org.wireshark.Wireshark
-    ch.protonmail.protonmail-bridge
-    ca.desrt.dconf-editor
+    #im.riot.Riot
+    com.getpostman.Postman
+    #org.nextcloud.Nextcloud
     com.bitwarden.desktop
     com.github.micahflee.torbrowser-launcher
 )
