@@ -20,7 +20,8 @@ declare RPM_PACKAGES=(
     system76-dkms system76-power system76-driver system76-firmware
     firmware-manager system76-io-dkms ansible tor torsocks
     proxychains gobby05 python3-neovim neofetch htop lynis ulauncher
-    util-linux-user
+    util-linux-user timeshift zram zram-generator zram-generator-defaults
+    systemd-swap
 )
 
 echo "${RPM_PACKAGES[@]}"
