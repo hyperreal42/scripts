@@ -17,12 +17,12 @@ declare FLATPAK_PACKAGES=(
     com.discordapp.Discord
     org.telegram.desktop
     im.slack.Slack
+    com.github.mdh34.quickdocs
+    org.fedoraproject.MediaWriter
     net.ankiweb.Anki
     org.zealdocs.Zeal
     org.wireshark.Wireshark
-    #im.riot.Riot
     com.getpostman.Postman
-    #org.nextcloud.Nextcloud
     com.bitwarden.desktop
     com.github.micahflee.torbrowser-launcher
 )
