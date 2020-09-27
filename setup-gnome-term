@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# :author:     Jeffrey Serio <hyperreal64@pm.me>
+# :date:       27 Sep 2020
+# :version:    0.0.1
+#
+# Installs GNOME Terminal profiles
+#
+# Changelog:
+# 27 Sep 2020 - First version
+
+set -euo pipefail
+
+if ! [[ $(command -v dconf) ]]; then
+  echo "Cannot proceed without dconf-editor. Please install it and rerun this script."
+  exit 1
+fi
+
+if ! [[ $(ls "${HOME}/scripts/misc/gnome-terminal-profiles.dconf") ]]; then
+  echo "gnome-terminal-profiles.dconf is missing. Please find it and rerun this script."
+  exit 1
+fi
+
+dconf load /org/gnome/terminal/legacy/profiles:/ < "${HOME}/scripts/misc/gnome-terminal-profiles.dconf"
+
+echo "All done!"
