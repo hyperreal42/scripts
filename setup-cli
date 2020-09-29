@@ -6,7 +6,7 @@ if ! [ -d "$HOME/.tmux" ]; then
 fi
 
 if ! [ -d "$HOME/.oh-my-zsh" ]; then
-    git clone https://github.com/hyperreal42/ohmyzsh.git "$HOME/.oh-my-zsh"
+    git clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
     git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 fi
