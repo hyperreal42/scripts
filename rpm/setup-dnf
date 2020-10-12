@@ -13,15 +13,14 @@ function setup_copr() {
 
 declare RPM_PACKAGES=(
     zsh '@c-development' '@development-tools' '@container-management'
-    nano tmux xsel exa bat cargo npm neovim jq ShellCheck toolbox
+    nano tmux xsel cargo npm jq ShellCheck toolbox
     python3-devel python3-pip gnome-tweak-tool chrome-gnome-shell 
     p7zip p7zip-plugins ffmpeg-libs lsof akmod-nvidia most
     fontconfig-enhanced-defaults fontconfig-font-replacements
     system76-dkms system76-power system76-driver system76-firmware
     firmware-manager system76-io-dkms ansible tor torsocks
-    proxychains gobby05 python3-neovim neofetch htop lynis ulauncher
+    proxychains neofetch htop lynis ulauncher snapper systemd-swap
     util-linux-user timeshift zram zram-generator zram-generator-defaults
-    systemd-swap
 )
 
 echo "${RPM_PACKAGES[@]}"

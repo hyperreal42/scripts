@@ -13,7 +13,7 @@ function update_cache() {
 
 declare APT_PACKAGES=(
     build-essential zsh python3-dev python3-pip curl httpie
-    cargo npm ansible tmux git git-core snapd neovim xsel jq 
+    cargo npm ansible tmux git git-core snapd xsel jq 
     gpaste pastebinit apt-file gnome-tweak-tool chrome-gnome-shell 
     flatpak apt-transport-https autoconf automake most
 )

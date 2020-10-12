@@ -1,3 +1,19 @@
 #!/usr/bin/env bash
 
-$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)
+set -euo pipefail
+
+declare BREW_PACKAGES=(
+    bat 
+    bitwarden-cli 
+    chezmoi 
+    fzf 
+    golang 
+    lsd 
+    neovim 
+    starship 
+    topgrade
+)
+
+echo "Installing Linux brew packages..."
+brew install "${BREW_PACKAGES[@]}"
+echo "Done!"
