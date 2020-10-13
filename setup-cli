@@ -15,3 +15,9 @@ if ! [ -d "/home/linuxbrew" ]; then
   curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh
 fi
 
+if ! [ -d "$HOME/.fzf" ]; then
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  "$HOME/.fzf/install"
+fi 
+
+
