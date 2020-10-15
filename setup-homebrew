@@ -9,7 +9,6 @@ declare BREW_PACKAGES=(
     fzf 
     golang 
     lsd 
-    neovim 
     starship 
     topgrade
 )
