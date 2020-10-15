@@ -6,27 +6,10 @@ declare SNAPS=(
   gosec
 )
 
-declare SNAPS_CLASSIC=(
-  code
-)
-
-declare SNAPS_BETA=(
-  authy
-)
-
 echo "Installing SNAPS..."
 sudo snap install "${SNAPS[@]}"
 
-echo "Installing SNAPS_CLASSIC..."
-for pkg in "${SNAPS_CLASSIC[@]}"; do
-  sudo snap install "$pkg" --classic
-done
-
-echo "Installing SNAPS_BETA..."
-for pkg in "${SNAPS_BETA[@]}"; do 
-  sudo snap install "$pkg" --beta
-done
-
 echo "Creating symlink from /snap to /var/lib/snapd/snap"
+sudo ln -sf /var/lib/snapd/snap /snap
 
 echo "Process complete!"
