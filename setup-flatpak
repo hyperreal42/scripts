@@ -16,15 +16,14 @@ declare FLATPAK_PACKAGES=(
     com.github.miguelmota.Cointop
     com.discordapp.Discord
     org.telegram.desktop
+    com.github.vladimiry.ElectronMail
+    org.zealdocs.Zeal
+    ch.protonmail.protonmail-import-export-app
     im.slack.Slack
-    com.github.mdh34.quickdocs
     org.fedoraproject.MediaWriter
     net.ankiweb.Anki
-    org.zealdocs.Zeal
     org.wireshark.Wireshark
     com.getpostman.Postman
-    com.bitwarden.desktop
-    com.github.micahflee.torbrowser-launcher
 )
 
 echo "${FLATPAK_PACKAGES[@]}"

@@ -10,6 +10,7 @@ declare BREW_PACKAGES=(
     golang 
     lsd 
     starship 
+    tig
     topgrade
 )
 

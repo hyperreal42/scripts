@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -euo pipefail
 
 function setup_rpmfusion() {
     sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-32.noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-32.noarch.rpm
@@ -23,14 +23,15 @@ declare RPM_PACKAGES=(
     util-linux-user timeshift zram zram-generator zram-generator-defaults
 )
 
+echo "Setup RPMFusion repositories..." && setup_rpmfusion >/dev/null 2>&1
+echo "Setup copr repositories..." && setup_copr >/dev/null 2>&1
+echo "Install the following RPM packages:"
 echo "${RPM_PACKAGES[@]}"
-echo ""
-
-setup_rpmfusion
-setup_copr
-sudo dnf install -y "${RPM_PACKAGES[@]}"
+sudo dnf install -y "${RPM_PACKAGES[@]}" >/dev/null 2>&1
 
 echo "Post installation setup..."
-sudo systemctl enable system76-power system76-power-wake system76-firmware-daemon
-systemctl enable --user com.system76.FirmwareManager.Notify.timer
+echo "Enable system76 systemd services..." &&
+    sudo systemctl enable system76-power system76-power-wake system76-firmware-daemon &&
+    systemctl enable --user com.system76.FirmwareManager.Notify.timer
+echo "Enable zram-swap.service..." && sudo systemctl enable zram-swap.service
 echo "Done!"
