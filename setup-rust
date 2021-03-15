@@ -24,6 +24,9 @@ declare CRATES=(
   topgrade
   cargo-update
   fd-find
+  hyperfine
+  vivid
+  ripgrep
 )
 
 echo "${CRATES[@]}"
