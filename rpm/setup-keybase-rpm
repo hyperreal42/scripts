@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-echo "Downloading Keybase package: keybase_amd64.rpm"
-echo "Installing Keybase package..."
-sudo dnf install -y https://prerelease.keybase.io/keybase_amd64.rpm
-echo "Done! Running Keybase..."
-run_keybase

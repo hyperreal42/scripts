@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# :author:     Jeffrey Serio <hyperreal64@pm.me>
+# :date:       14 Mar 2021
+# :version:    0.0.1
+#
+# Setup the Rust programming language and install crates with cargo.
+#
+# Changelog:
+# - 14 Mar 2021: First version
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+echo ""
+echo "======================================"
+echo "= Installing Cargo Crates            ="
+echo "======================================"
+echo ""
+
+declare CRATES=(
+  lsd
+  bat
+  skim
+  mdcat
+  topgrade
+  cargo-update
+  fd-find
+)
+
+echo "${CRATES[@]}"
+echo ""
+
+for i in "${CRATES[@]}"; do
+  cargo install "$i"
+done
