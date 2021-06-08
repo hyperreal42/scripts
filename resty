@@ -8,10 +8,9 @@
 # a rest-server. It is only meant to simplify certain restic tasks and does not
 # support full restic functionality. If one needs full restic functionality, then use 
 # restic :P
-# It checks if the user is using a Wireguard VPN and sets the rest-server IP accordingly.
 #
 # CHANGELOG
-# 2021-06-07 - Refactor IP address and Wireguard checking
+# 2021-06-07 - Refactor IP address
 #            - Add error check for $files_list_path
 #
 # 2021-05-22 - First version
@@ -25,12 +24,6 @@ set -euo pipefail
 # User should define $rest_server_ip to be the ip of their rest-server
 files_list_path="${HOME}/documents/backup_files"
 rest_server_ip=""
-
-if command -v wg >& /dev/null; then
-  rest_server_ip=$(sudo wg | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" \
-    | tail -n 1)
-fi
-
 rest_server_port="8000"
 rest_server_uri="http://${rest_server_ip}:${rest_server_port}"
 restic_repos=$(ssh "${USER}@${rest_server_ip}" ls /srv/restic)
@@ -48,6 +41,8 @@ function printUsage() {
   printf "\t  resty -r <repo> -a restore <snap_id> <path>\n\n"
   printf "\tDisplay diff between two snapshots in repository:\n"
   printf "\t  resty -r <repo> -a diff <snap_id0> <snap_id1>\n\n"
+  printf "\tUse VPN IP address for rest-server:\n"
+  printf "\t resty -w -r <repo> -a <action>\n\n"
   printf "\tList repositories on rest-server:\n"
   printf "\t  resty -l\n\n"
   printf "\tPrint usage info:\n"
